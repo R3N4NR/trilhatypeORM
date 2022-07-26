@@ -3,28 +3,419 @@
 # ------------------------------------------------------
 
 type Student {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAat: DateTime!
+  name: String!
+  key: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+type StudentDeleteResponse {
+  id: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+  key: String
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+type OffsetPageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+}
+
+type StudentConnection {
+  """Paging information"""
+  pageInfo: OffsetPageInfo!
+
+  """Array of nodes."""
+  nodes: [Student!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type StudentAggregateGroupBy {
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+  key: String
+}
+
+type StudentCountAggregate {
+  createdAt: Int
+  updatedAt: Int
+  deletedAat: Int
+  name: Int
+  key: Int
+}
+
+type StudentMinAggregate {
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+  key: String
+}
+
+type StudentMaxAggregate {
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+  key: String
+}
+
+type DisciplineDTO {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAat: DateTime!
+  name: String!
+}
+
+type DisciplineDTODeleteResponse {
+  id: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+}
+
+type DisciplineDTOConnection {
+  """Paging information"""
+  pageInfo: OffsetPageInfo!
+
+  """Array of nodes."""
+  nodes: [DisciplineDTO!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type DisciplineDTOAggregateGroupBy {
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+}
+
+type DisciplineDTOCountAggregate {
+  createdAt: Int
+  updatedAt: Int
+  deletedAat: Int
+  name: Int
+}
+
+type DisciplineDTOMinAggregate {
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
+}
+
+type DisciplineDTOMaxAggregate {
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAat: DateTime
+  name: String
 }
 
 type Query {
-  students: [Student!]!
-  student(id: Int!): Student!
+  student(
+    """The id of the record to find."""
+    id: ID!
+  ): Student
+  students(
+    """Limit or page results."""
+    paging: OffsetPaging = {limit: 10}
+
+    """Specify to filter the records returned."""
+    filter: StudentFilter = {}
+
+    """Specify to sort results."""
+    sorting: [StudentSort!] = []
+  ): StudentConnection!
+  disciplineDTO(
+    """The id of the record to find."""
+    id: ID!
+  ): DisciplineDTO
+  disciplineDTOS(
+    """Limit or page results."""
+    paging: OffsetPaging = {limit: 10}
+
+    """Specify to filter the records returned."""
+    filter: DisciplineDTOFilter = {}
+
+    """Specify to sort results."""
+    sorting: [DisciplineDTOSort!] = []
+  ): DisciplineDTOConnection!
+}
+
+input OffsetPaging {
+  """Limit the number of records returned"""
+  limit: Int
+
+  """Offset to start returning records from"""
+  offset: Int
+}
+
+input StudentFilter {
+  and: [StudentFilter!]
+  or: [StudentFilter!]
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+  deletedAat: DateFieldComparison
+  name: StringFieldComparison
+  key: StringFieldComparison
+}
+
+input DateFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: DateTime
+  neq: DateTime
+  gt: DateTime
+  gte: DateTime
+  lt: DateTime
+  lte: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  between: DateFieldComparisonBetween
+  notBetween: DateFieldComparisonBetween
+}
+
+input DateFieldComparisonBetween {
+  lower: DateTime!
+  upper: DateTime!
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input StudentSort {
+  field: StudentSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum StudentSortFields {
+  createdAt
+  updatedAt
+  deletedAat
+  name
+  key
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input DisciplineDTOFilter {
+  and: [DisciplineDTOFilter!]
+  or: [DisciplineDTOFilter!]
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+  deletedAat: DateFieldComparison
+  name: StringFieldComparison
+}
+
+input DisciplineDTOSort {
+  field: DisciplineDTOSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum DisciplineDTOSortFields {
+  createdAt
+  updatedAt
+  deletedAat
+  name
 }
 
 type Mutation {
-  createStudent(createStudentInput: CreateStudentInput!): Student!
-  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
-  removeStudent(id: Int!): Student!
+  createOneStudent(input: CreateOneStudentInput!): Student!
+  createManyStudents(input: CreateManyStudentsInput!): [Student!]!
+  updateOneStudent(input: UpdateOneStudentInput!): Student!
+  updateManyStudents(input: UpdateManyStudentsInput!): UpdateManyResponse!
+  deleteOneStudent(input: DeleteOneStudentInput!): StudentDeleteResponse!
+  deleteManyStudents(input: DeleteManyStudentsInput!): DeleteManyResponse!
+  createOneDisciplineDTO(input: CreateOneDisciplineDTOInput!): DisciplineDTO!
+  createManyDisciplineDTOS(input: CreateManyDisciplineDTOSInput!): [DisciplineDTO!]!
+  updateOneDisciplineDTO(input: UpdateOneDisciplineDTOInput!): DisciplineDTO!
+  updateManyDisciplineDTOS(input: UpdateManyDisciplineDTOSInput!): UpdateManyResponse!
+  deleteOneDisciplineDTO(input: DeleteOneDisciplineDTOInput!): DisciplineDTODeleteResponse!
+  deleteManyDisciplineDTOS(input: DeleteManyDisciplineDTOSInput!): DeleteManyResponse!
+}
+
+input CreateOneStudentInput {
+  """The record to create"""
+  student: CreateStudentInput!
 }
 
 input CreateStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  key: String!
+}
+
+input CreateManyStudentsInput {
+  """Array of records to create"""
+  students: [CreateStudentInput!]!
+}
+
+input UpdateOneStudentInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateStudentInput!
 }
 
 input UpdateStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String
+  key: String
+  id: String!
+}
+
+input UpdateManyStudentsInput {
+  """Filter used to find fields to update"""
+  filter: StudentUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateStudentInput!
+}
+
+input StudentUpdateFilter {
+  and: [StudentUpdateFilter!]
+  or: [StudentUpdateFilter!]
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+  deletedAat: DateFieldComparison
+  name: StringFieldComparison
+  key: StringFieldComparison
+}
+
+input DeleteOneStudentInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteManyStudentsInput {
+  """Filter to find records to delete"""
+  filter: StudentDeleteFilter!
+}
+
+input StudentDeleteFilter {
+  and: [StudentDeleteFilter!]
+  or: [StudentDeleteFilter!]
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+  deletedAat: DateFieldComparison
+  name: StringFieldComparison
+  key: StringFieldComparison
+}
+
+input CreateOneDisciplineDTOInput {
+  """The record to create"""
+  disciplineDTO: CreateDisciplineInput!
+}
+
+input CreateDisciplineInput {
+  name: String!
+}
+
+input CreateManyDisciplineDTOSInput {
+  """Array of records to create"""
+  disciplineDTOS: [CreateDisciplineInput!]!
+}
+
+input UpdateOneDisciplineDTOInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateDisciplineInput!
+}
+
+input UpdateDisciplineInput {
+  name: String
+  id: ID!
+}
+
+input UpdateManyDisciplineDTOSInput {
+  """Filter used to find fields to update"""
+  filter: DisciplineDTOUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateDisciplineInput!
+}
+
+input DisciplineDTOUpdateFilter {
+  and: [DisciplineDTOUpdateFilter!]
+  or: [DisciplineDTOUpdateFilter!]
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+  deletedAat: DateFieldComparison
+  name: StringFieldComparison
+}
+
+input DeleteOneDisciplineDTOInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteManyDisciplineDTOSInput {
+  """Filter to find records to delete"""
+  filter: DisciplineDTODeleteFilter!
+}
+
+input DisciplineDTODeleteFilter {
+  and: [DisciplineDTODeleteFilter!]
+  or: [DisciplineDTODeleteFilter!]
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+  deletedAat: DateFieldComparison
+  name: StringFieldComparison
 }
