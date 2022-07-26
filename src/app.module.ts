@@ -6,6 +6,8 @@ import { join } from 'path';
 import { AppService } from './app.service';
 import { StudentsModule } from './module/students/students.module';
 import { DisciplinesModule } from './module/disciplines/disciplines.module';
+import { LessonsModule } from './module/lessons/lessons.module';
+import { ConteudosModule } from './module/conteudos/conteudos.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -28,6 +30,8 @@ import { DisciplinesModule } from './module/disciplines/disciplines.module';
     }),
     StudentsModule,
     DisciplinesModule,
+    LessonsModule,
+    ConteudosModule,
   ],
   controllers: [],
   providers: [AppService],

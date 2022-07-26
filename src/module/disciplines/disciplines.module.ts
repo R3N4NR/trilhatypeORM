@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DisciplinesService } from './disciplines.service';
 import { DisciplineDTO } from './dto/discipline.dto';
 import { UpdateDisciplineInput } from './dto/update-discipline.input';
 import { CreateDisciplineInput } from './dto/create-discipline.input';

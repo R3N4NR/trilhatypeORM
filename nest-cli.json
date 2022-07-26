@@ -2,4 +2,7 @@
   
   "collection": "@nestjs/schematics",
   "sourceRoot": "src/module"
+ 
+    
+  
 }
